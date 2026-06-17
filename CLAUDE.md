@@ -28,7 +28,7 @@ A Mission Control dashboard for AI agents. Next.js 16 App Router, Prisma
 ## Data flow reference
 
 ```
-OpenClaw Agent (Python / TS)
+Hermes Agent (Python / TS)
        │  POST /api/agents/state
        │  Authorization: Bearer $INTERNAL_API_SECRET
        ▼
@@ -64,16 +64,16 @@ OpenClaw Agent (Python / TS)
 
 This is a template. Do NOT add:
 
-- Sharbel-specific integrations (Polymarket, Hyperliquid, specific
+- Bruce-specific integrations (trading tools, specific
   newsletter tools) without a user asking for them.
 - Tauri desktop shell (explicitly stripped from the template).
 - Heavy UI libraries. Tailwind is it.
 - ORMs other than Prisma.
 
-## If the user wants the full Max HQ experience
+## If the user wants the full Bruce Mission Control experience
 
-Max HQ is @sharbelxyz's private superset of this template. It has
-trading PnL cards, Polymarket integration, content briefs, a longform
+Bruce Mission Control is @whosebruce's private superset of this template. It has
+content briefs, a longform
 script pipeline, YouTube analytics. It's not shippable as a public
 template. This repo is the generic scaffold; the user builds their own
 personality on top.

@@ -1,0 +1,59 @@
+# Bruce Mission Control — Caddy reverse proxy
+# Self-hosted, NOT publicly advertised yet. Internal-only by default.
+#
+# Pick ONE of the two blocks below (delete the other):
+#
+#   (A) INTERNAL ONLY — accessible only on the LAN / Tailscale. No public DNS.
+#       Use this first. Flip to (B) only when you're ready to expose it.
+#
+#   (B) PUBLIC + TLS — same hostname, but with automatic HTTPS via Caddy + Let's Encrypt.
+#       Requires a real DNS A record pointing at this box.
+
+# ============================================================================
+# (A) INTERNAL ONLY — recommended starting point
+# ============================================================================
+# Listen on the LAN IP only, no TLS needed (browser-to-Caddy is over LAN/VPN).
+# Replace 192.168.88.X with the actual IP of the box running Mission Control.
+#
+# mission.lan {
+#     bind 192.168.88.X
+#     reverse_proxy 127.0.0.1:3000
+# }
+
+# ============================================================================
+# (B) PUBLIC + AUTO TLS — uncomment when ready to expose
+# ============================================================================
+# Replace mission.bruceworksllc.com with your real domain. Caddy will provision
+# and renew the Let's Encrypt cert automatically.
+#
+# mission.bruceworksllc.com {
+#     reverse_proxy 127.0.0.1:3000
+#     encode gzip zstd
+#     header {
+#         # Strip identifying headers from upstream Next.js
+#         Server ""
+#         X-Powered-By ""
+#         # Defense in depth
+#         Strict-Transport-Security "max-age=31536000; includeSubDomains"
+#         X-Content-Type-Options "nosniff"
+#         X-Frame-Options "DENY"
+#         Referrer-Policy "no-referrer"
+#     }
+#     log {
+#         output file /var/log/caddy/bruce-mission-control.log {
+#             roll_size 10mb
+#             roll_keep 5
+#         }
+#     }
+# }
+
+# ============================================================================
+# Notes
+# ============================================================================
+# - Mission Control's Next.js app listens on 127.0.0.1:3000 by default.
+# - The heartbeat endpoint (POST /api/agents/state) is gated by INTERNAL_API_SECRET
+#   in .env — even if exposed publicly, unauth'd writes won't go through.
+# - For dashboard reads (GET /, /agents, /missions, /ideas, /calendar), put the
+#   whole domain behind Tailscale or Authentik before flipping to block (B).
+# - Caddy will pick up file changes automatically. No `systemctl reload` needed
+#   unless you change the systemd unit.

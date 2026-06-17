@@ -26,7 +26,7 @@ export function Sidebar() {
         >
           O
         </div>
-        OpenClaw Mission Control
+        Bruce Mission Control
       </div>
       <nav className="flex flex-col gap-0.5">
         {NAV.map((item) => {

@@ -1,6 +1,6 @@
 # BOOTSTRAP.md
 
-**Audience:** an OpenClaw (or Claude Code) agent the user has pointed at
+**Audience:** an Hermes (or Claude Code) agent the user has pointed at
 this repo to set it up for them. If you're a human reading this, see
 `README.md` instead.
 
@@ -28,7 +28,7 @@ Ask the user in this order:
      the `DATABASE_URL`.
    - "I want local Postgres" -> tell them to run `brew install postgresql`
      (mac) or use `docker run postgres`, then set
-     `DATABASE_URL="postgresql://postgres@localhost:5432/openclaw"`.
+     `DATABASE_URL="postgresql://postgres@localhost:5432/hermes"`.
 3. **Any API keys the dashboard itself needs?** By default it needs none.
    If the user wants the dashboard to call LLMs (for example, to summarize
    agent activity), collect an `OPENROUTER_API_KEY`. Otherwise leave it
@@ -107,9 +107,9 @@ Suggest these to the user, in order of impact. Build whichever they ask for:
 - Before building any new feature the user asks for, ask if they want it
   a) purely on the dashboard, b) with a backing Prisma model, c) with an
   external API. Those are three very different scope levels.
-- If the user says "make it look like Max HQ", reference the styling in
+- If the user says "make it look like Bruce Mission Control", reference the styling in
   `src/app/globals.css` and the sidebar in `src/components/sidebar.tsx`.
-- No em dashes in generated content (this is a sharbelxyz convention
+- No em dashes in generated content (this is a whosebruce convention
   baked into every repo he ships).
 
 ## When bootstrap is complete

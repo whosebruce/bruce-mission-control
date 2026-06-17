@@ -1,5 +1,6 @@
 /**
  * Seed demo data so a fresh install has something to look at.
+ * Bruce's bot roster — running under Hermes Agent on the Life of Bruce stack.
  * Run once with `npm run seed:demo`. Safe to re-run (upserts by id).
  */
 import { PrismaClient } from "@prisma/client";
@@ -8,76 +9,90 @@ const prisma = new PrismaClient();
 
 const AGENTS = [
   {
-    id: "content-writer",
-    name: "Content Writer",
-    emoji: "✍️",
-    role: "Content",
+    id: "mira",
+    name: "Mira",
+    emoji: "🪞",
+    role: "Knowledge / Orchestration",
     status: "working",
-    tasksCompleted: 42,
-    totalCost: 3.14,
-    currentTask: "Drafting 3 tweets about agent workflows",
+    tasksCompleted: 124,
+    totalCost: 4.82,
+    currentTask: "Drafting daily Mira digest into Obsidian",
   },
   {
-    id: "research-analyst",
-    name: "Research Analyst",
-    emoji: "🔎",
-    role: "Research",
+    id: "apollo",
+    name: "Apollo",
+    emoji: "🎨",
+    role: "Creative / Design",
     status: "idle",
-    tasksCompleted: 18,
-    totalCost: 1.08,
+    tasksCompleted: 38,
+    totalCost: 1.91,
     currentTask: null,
   },
   {
-    id: "growth-scout",
-    name: "Growth Scout",
-    emoji: "📈",
-    role: "Growth",
+    id: "otto",
+    name: "Otto",
+    emoji: "🔧",
+    role: "Ops / Home",
     status: "online",
-    tasksCompleted: 9,
-    totalCost: 0.44,
-    currentTask: "Scanning for trending topics in your niche",
+    tasksCompleted: 67,
+    totalCost: 0.88,
+    currentTask: "Heartbeat check on Helios services",
   },
   {
-    id: "inbox-triage",
-    name: "Inbox Triage",
-    emoji: "📬",
-    role: "Ops",
-    status: "offline",
-    tasksCompleted: 7,
-    totalCost: 0.12,
-    currentTask: null,
+    id: "jade",
+    name: "Jade",
+    emoji: "🔭",
+    role: "Research / Frontier Intel",
+    status: "online",
+    tasksCompleted: 22,
+    totalCost: 1.05,
+    currentTask: "Weekly frontier lab scan — OpenAI, Anthropic, xAI",
   },
 ];
 
 const MISSIONS = [
-  { agentId: "content-writer", title: "Write teardown of agent stack", status: "active", priority: "high" },
-  { agentId: "research-analyst", title: "Pull top 10 videos on AI agents", status: "pending", priority: "medium" },
-  { agentId: "growth-scout", title: "Competitor scan: LLM wrapper startups", status: "pending", priority: "low" },
+  { agentId: "mira",   title: "Send Mira daily digest to Discord + Obsidian", status: "active",   priority: "high"   },
+  { agentId: "jade",   title: "Frontier lab scan — week of YYYY-MM-DD",         status: "pending",  priority: "high"   },
+  { agentId: "apollo", title: "Studio Futura brand kit — phase 2",              status: "active",   priority: "medium" },
+  { agentId: "otto",   title: "Proxmox backup audit (192.168.88.7)",            status: "pending",  priority: "medium" },
+  { agentId: "jade",   title: "Improve Nova — weekly meta-loop",                status: "active",   priority: "low"    },
 ];
 
 const IDEAS = [
   {
-    title: "AI agents that audit your inbox for unanswered customer DMs",
-    description: "Automated triage + suggested replies in your voice",
-    source: "inbox-triage",
+    title: "Daily Mira digest → Discord thread + Obsidian note",
+    description: "Each bot ends the day with a 5-bullet standup. Mira aggregates and posts.",
+    source: "mira",
     status: "pending",
   },
   {
-    title: "Mission Control teardown video (this repo)",
-    description: "Show how one dashboard unifies every agent you run",
-    source: "growth-scout",
+    title: "Frontier AI weekly — Obsidian brief from Jade",
+    description: "What shipped from OpenAI / Anthropic / Google / xAI / Meta / Mistral / DeepSeek / Qwen.",
+    source: "jade",
     status: "pending",
   },
   {
-    title: "Weekly 'agent standup' digest",
-    description: "Every agent reports top 3 accomplishments, blockers, asks",
-    source: "content-writer",
+    title: "Studio Futura Etsy listing pack — Apollo batch",
+    description: "Generate 1:1 logo, 21:9 banner, 2:3 pin variants for new SKUs.",
+    source: "apollo",
+    status: "pending",
+  },
+  {
+    title: "Helios uptime dashboard card",
+    description: "Surface Ollama / Open WebUI / SearXNG / helios-youtube / Whisper health on Mission Control.",
+    source: "otto",
+    status: "pending",
+  },
+  {
+    title: "BruceWorks Pocket Class — closer sequence (Mira + Kimmy)",
+    description: "Email + DM cadence for $25 v1 buyers → $50-75 v2 upsell.",
+    source: "mira",
     status: "pending",
   },
 ];
 
 async function main() {
-  console.log("Seeding demo data...");
+  console.log("Seeding Bruce Mission Control demo data...");
 
   for (const a of AGENTS) {
     await prisma.agentState.upsert({
