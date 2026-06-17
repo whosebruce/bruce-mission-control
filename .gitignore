@@ -48,3 +48,6 @@ next-env.d.ts
 /data/*.json
 !/data/example-agent-state.json
 !/data/.gitkeep
+
+# Runtime logs (created by systemd services)
+.tmp/
