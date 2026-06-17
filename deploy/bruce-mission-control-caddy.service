@@ -1,0 +1,16 @@
+[Unit]
+Description=Bruce Mission Control Caddy reverse proxy (mission.lan:8080)
+After=network-online.target bruce-mission-control.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/bruce/.hermes/projects/bruce-mission-control
+ExecStart=/home/bruce/bin/caddy run --config /home/bruce/.hermes/projects/bruce-mission-control/Caddyfile
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/bruce/.hermes/projects/bruce-mission-control/.tmp/caddy-stdout.log
+StandardError=append:/home/bruce/.hermes/projects/bruce-mission-control/.tmp/caddy-stdout.log
+
+[Install]
+WantedBy=default.target

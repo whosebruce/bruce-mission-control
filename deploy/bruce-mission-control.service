@@ -1,0 +1,16 @@
+[Unit]
+Description=Bruce Mission Control Next.js (:3000)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/bruce/.hermes/projects/bruce-mission-control
+ExecStart=/home/linuxbrew/.linuxbrew/Cellar/node/25.9.0_2/bin/node node_modules/next/dist/bin/next start
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/bruce/.hermes/projects/bruce-mission-control/.tmp/nextjs.log
+StandardError=append:/home/bruce/.hermes/projects/bruce-mission-control/.tmp/nextjs.log
+
+[Install]
+WantedBy=default.target

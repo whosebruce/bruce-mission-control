@@ -1,0 +1,57 @@
+# Bruce Mission Control — Caddyfile TEMPLATE
+# Two modes. Pick ONE block and uncomment it (or use the live Caddyfile at this repo root).
+
+# ============================================================================
+# (A) INTERNAL ONLY — recommended starting point
+# ============================================================================
+# Caddy runs as a non-root user, so we use a high port (8080) to avoid the
+# bind-permission issue on port 80. If you want port 80, run caddy as root
+# (sudo) or grant the binary NET_BIND_SERVICE via setcap.
+#
+# Use a bare host (`:8080`) for any-Host routing, or replace with a real LAN
+# hostname (e.g. `mission.lan:8080`) for Host-based routing.
+#
+# {
+#     auto_https off              # no certs needed for LAN-only
+#     admin localhost:2019        # keep Caddy's admin API off the LAN
+# }
+#
+# :8080 {
+#     bind 192.168.88.13          # CHANGE to your box LAN IP
+#     reverse_proxy 127.0.0.1:3000
+#     encode gzip zstd
+#     header {
+#         Server ""
+#         X-Powered-By ""
+#         X-Content-Type-Options "nosniff"
+#         X-Frame-Options "DENY"
+#         Referrer-Policy "no-referrer"
+#     }
+#     log {
+#         output file .tmp/caddy.log {
+#             roll_size 10mb
+#             roll_keep 5
+#         }
+#     }
+# }
+
+# ============================================================================
+# (B) PUBLIC + AUTO TLS — uncomment when ready to expose
+# ============================================================================
+# Requires a real DNS A record pointing at this box. Caddy provisions LE certs.
+#
+# {
+#     admin localhost:2019
+# }
+#
+# mission.bruceworksllc.com {
+#     bind 192.168.88.13
+#     reverse_proxy 127.0.0.1:3000
+#     encode gzip zstd
+#     header {
+#         Strict-Transport-Security "max-age=31536000; includeSubDomains"
+#         X-Content-Type-Options "nosniff"
+#         X-Frame-Options "DENY"
+#         Referrer-Policy "no-referrer"
+#     }
+# }
