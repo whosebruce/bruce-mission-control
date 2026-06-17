@@ -6,10 +6,10 @@
 }
 
 # Bruce Mission Control — internal-only reverse proxy
-# Listens on the .13 LAN IP only. Not publicly advertised.
-# Empty host (":8080") means "any Host header" — keeps things simple for LAN access.
+# Listens on the .13 LAN IP and loopback. Not publicly advertised.
 :8080 {
     bind 192.168.88.13
+    bind 127.0.0.1
     reverse_proxy 127.0.0.1:3000
     encode gzip zstd
     header {

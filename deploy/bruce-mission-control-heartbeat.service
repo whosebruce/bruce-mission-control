@@ -1,0 +1,16 @@
+[Unit]
+Description=Bruce Mission Control heartbeat daemon (watches all 4 Hermes gateways)
+After=network-online.target bruce-mission-control.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/bruce/.hermes/projects/bruce-mission-control
+ExecStart=/home/bruce/.hermes/hermes-agent/venv/bin/python /home/bruce/.hermes/projects/bruce-mission-control/scripts/heartbeat-daemon.py
+Restart=always
+RestartSec=10
+Environment=HEARTBEAT_INTERVAL=300
+Environment=MISSION_CONTROL_URL=http://127.0.0.1:8080
+
+[Install]
+WantedBy=default.target
